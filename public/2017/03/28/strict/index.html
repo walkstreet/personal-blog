@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <!-- PACE Progress Bar START -->
+  
+    <script src="/personal-blog/public/js/pace.min.js"></script>
+    <link rel="stylesheet" href="https://github.com/HubSpot/pace/raw/master/themes/orange/pace-theme-flash.css">
+  
+  
+
+  <!-- PACE Progress Bar START -->
+
+  
+  <title>javascript 严格模式详解 | Qing的前端开发Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="严格模式" />
+  
+  
+  
+  
+  <meta name="description" content="概述除了正常运行模式，ECMAscript 5添加了第二种运行模式：”严格模式”（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。
+设立”严格模式”的目的，主要有以下几个：　　- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;　　- 消除代码运行的一些不安全之处，保证代码运行的安全；　　- 提高编译器效率，增加运行速度；　　- 为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript 严格模式详解">
+<meta property="og:url" content="https://walkstreet.github.io/personal-blog/public/2017/03/28/strict/index.html">
+<meta property="og:site_name" content="Qing的前端开发Blog">
+<meta property="og:description" content="概述除了正常运行模式，ECMAscript 5添加了第二种运行模式：”严格模式”（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。
+设立”严格模式”的目的，主要有以下几个：　　- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;　　- 消除代码运行的一些不安全之处，保证代码运行的安全；　　- 提高编译器效率，增加运行速度；　　- 为">
+<meta property="og:updated_time" content="2018-02-23T09:47:02.458Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript 严格模式详解">
+<meta name="twitter:description" content="概述除了正常运行模式，ECMAscript 5添加了第二种运行模式：”严格模式”（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。
+设立”严格模式”的目的，主要有以下几个：　　- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;　　- 消除代码运行的一些不安全之处，保证代码运行的安全；　　- 提高编译器效率，增加运行速度；　　- 为">
+  
+    <link rel="alternate" href="/atom.xml" title="Qing的前端开发Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/personal-blog/public/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/personal-blog/public/css/style.css">
+
+  <script src="/personal-blog/public/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/personal-blog/public/css/bootstrap.css" >
+  <link rel="stylesheet" href="/personal-blog/public/css/hiero.css" >
+  <link rel="stylesheet" href="/personal-blog/public/css/glyphs.css" >
+  
+    <link rel="stylesheet" href="/personal-blog/public/css/vdonate.css" >
+  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/personal-blog/public/css/my.css">
+  <!-- Google Adsense -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-0123456789ABCDEF",
+          enable_page_level_ads: true
+      });
+  </script>
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/personal-blog/public/"] = "首页"; 
+
+  themeMenus["/personal-blog/public/archives"] = "归档"; 
+
+  themeMenus["/personal-blog/public/categories"] = "分类"; 
+
+  themeMenus["/personal-blog/public/tags"] = "标签"; 
+
+  themeMenus["/personal-blog/public/about"] = "关于"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/personal-blog/public/" title="Qing的前端开发Blog" rel="home"> Qing的前端开发Blog </a>
+            
+          </h1>
+
+          
+            <div class="site-description">Web前端开发文档整理</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="originBgDiv" style="background: #fff; width: 100%;">
+
+      <div style="max-height:600px; overflow: hidden;  display: flex; display: -webkit-flex; align-items: center;">
+        <img id="originBg" width="100%" alt="" src="">
+      </div>
+
+  </div>
+
+  <script>
+  function setAboutIMG(){
+      var imgUrls = "css/images/pose.jpg,https://source.unsplash.com/collection/954550/1920x1080".split(",");
+      var random = Math.floor((Math.random() * imgUrls.length ));
+      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+        document.getElementById("originBg").src=imgUrls[random];
+      } else {
+        document.getElementById("originBg").src='/personal-blog/public/' + imgUrls[random];
+      }
+  }
+  bgDiv=document.getElementById("originBgDiv");
+  if(location.pathname.match('about')){
+    setAboutIMG();
+    bgDiv.style.display='block';
+  }else{
+    bgDiv.style.display='none';
+  }
+  </script>
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-strict" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Javascript 严格模式详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/personal-blog/public/2017/03/28/strict/" class="article-date">
+	  <time datetime="2017-03-28T06:35:11.000Z" itemprop="datePublished">三月 28, 2017</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>除了正常运行模式，ECMAscript 5添加了第二种运行模式：”严格模式”（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。</p>
+<p>设立”严格模式”的目的，主要有以下几个：<br>　　- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;<br>　　- 消除代码运行的一些不安全之处，保证代码运行的安全；<br>　　- 提高编译器效率，增加运行速度；<br>　　- 为未来新版本的Javascript做好铺垫。</p>
+<p>“严格模式”体现了Javascript更合理、更安全、更严谨的发展方向，包括IE 10在内的主流浏览器，都已经支持它，许多大项目已经开始全面拥抱它。</p>
+<p>另一方面，同样的代码，在”严格模式”中，可能会有不一样的运行结果；一些在”正常模式”下可以运行的语句，在”严格模式”下将不能运行。掌握这些内容，有助于更细致深入地理解Javascript，让你变成一个更好的程序员。</p>
+<p>本文将对”严格模式”做详细介绍。</p>
+<a id="more"></a>
+<h2 id="进入标志"><a href="#进入标志" class="headerlink" title="进入标志"></a>进入标志</h2><p>进入”严格模式”的标志，是下面这行语句：</p>
+<p>　　<font class="font-danger">“use strict”;</font></p>
+<p>老版本的浏览器会把它当作一行普通字符串，加以忽略。</p>
+<h2 id="如何调用"><a href="#如何调用" class="headerlink" title="如何调用"></a>如何调用</h2><p>“严格模式”有两种调用方法，适用于不同的场合。</p>
+<h3 id="3-1-针对整个脚本文件"><a href="#3-1-针对整个脚本文件" class="headerlink" title="3.1 针对整个脚本文件"></a>3.1 针对整个脚本文件</h3><p>将”use strict”放在脚本文件的第一行，则整个脚本都将以”严格模式”运行。如果这行语句不在第一行，则无效，整个脚本以”正常模式”运行。如果不同模式的代码文件合并成一个文件，这一点需要特别注意。<br>(严格地说，只要前面不是产生实际运行结果的语句，”use strict”可以不在第一行，比如直接跟在一个空的分号后面。)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">&quot;use strict&quot;;</div><div class="line">console.log(&quot;这是严格模式。&quot;);</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;script&gt;</div><div class="line">console.log(&quot;这是正常模式。&quot;);kly, it&apos;s almost 2 years ago now. I can admit it now - I run it on my school&apos;s network that has about 50 computers.</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>上面的代码表示，一个网页中依次有两段Javascript代码。前一个script标签是严格模式，后一个不是。</p>
+<h3 id="3-2-针对单个函数"><a href="#3-2-针对单个函数" class="headerlink" title="3.2 针对单个函数"></a>3.2 针对单个函数</h3><p>将”use strict”放在函数体的第一行，则整个函数以”严格模式”运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function strict()&#123;</div><div class="line">	&quot;use strict&quot;;</div><div class="line">	return &quot;这是严格模式。&quot;;</div><div class="line">&#125;</div><div class="line">function notStrict() &#123;</div><div class="line">	return &quot;这是正常模式。&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-3-脚本文件的变通写法"><a href="#3-3-脚本文件的变通写法" class="headerlink" title="3.3 脚本文件的变通写法"></a>3.3 脚本文件的变通写法</h3><p>因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(function ()&#123;</div><div class="line">	&quot;use strict&quot;;</div><div class="line">	// some code here</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<h2 id="语法和行为改变"><a href="#语法和行为改变" class="headerlink" title="语法和行为改变"></a>语法和行为改变</h2><p>严格模式对Javascript的语法和行为，都做了一些改变。</p>
+<h3 id="4-1-全局变量显式声明"><a href="#4-1-全局变量显式声明" class="headerlink" title="4.1 全局变量显式声明"></a>4.1 全局变量显式声明</h3><p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">v = 1; // 报错，v未声明</div><div class="line">for(i = 0; i &lt; 2; i++) &#123; // 报错，i未声明</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因此，严格模式下，变量都必须先用var命令声明，然后再使用。</p>
+<h3 id="4-2-静态绑定"><a href="#4-2-静态绑定" class="headerlink" title="4.2 静态绑定"></a>4.2 静态绑定</h3><p>Javascript语言的一个特点，就是允许”动态绑定”，即某些属性和方法到底属于哪一个对象，不是在编译时确定的，而是在运行时（runtime）确定的。<br>严格模式对动态绑定做了一些限制。某些情况下，只允许静态绑定。也就是说，属性和方法到底归属哪个对象，在编译阶段就确定。这样做有利于编译效率的提高，也使得代码更容易阅读，更少出现意外。<br>具体来说，涉及以下几个方面。</p>
+<p>（1）禁止使用with语句<br>因为with语句无法在编译时就确定，属性到底归属哪个对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">var v = 1;</div><div class="line">with (o)&#123; // 语法错误 </div><div class="line">	v = 2;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>（2）创设eval作用域<br>正常模式下，Javascript语言有两种变量作用域（scope）：全局作用域和函数作用域。严格模式创设了第三种作用域：eval作用域。<br>正常模式下，eval语句的作用域，取决于它处于全局作用域，还是处于函数作用域。严格模式下，eval语句本身就是一个作用域，不再能够生成全局变量了，它所生成的变量只能用于eval内部。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">var x = 2;</div><div class="line">console.info(eval(&quot;var x = 5; x&quot;)); // 5</div><div class="line">console.info(x); // 2</div></pre></td></tr></table></figure>
+<h3 id="4-3-增强的安全措施"><a href="#4-3-增强的安全措施" class="headerlink" title="4.3 增强的安全措施"></a>4.3 增强的安全措施</h3><p>（1）禁止this关键字指向全局对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function f()&#123;</div><div class="line">	return !this;</div><div class="line">&#125; </div><div class="line">// 返回false，因为&quot;this&quot;指向全局对象，&quot;!this&quot;就是false</div><div class="line">function f()&#123; </div><div class="line">	&quot;use strict&quot;;</div><div class="line">	return !this;</div><div class="line">&#125; </div><div class="line">// 返回true，因为严格模式下，this的值为undefined，所以&quot;!this&quot;为true。</div></pre></td></tr></table></figure>
+<p>因此，使用构造函数时，如果忘了加new，this不再指向全局对象，而是报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function f()&#123;</div><div class="line">	&quot;use strict&quot;;</div><div class="line">	this.a = 1;</div><div class="line">&#125;;</div><div class="line">f();// 报错，this未定义</div></pre></td></tr></table></figure>
+<p>（2）禁止在函数内部遍历调用栈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function f1()&#123;</div><div class="line">	&quot;use strict&quot;;</div><div class="line">	f1.caller; // 报错</div><div class="line">	f1.arguments; // 报错</div><div class="line">&#125;</div><div class="line">f1();</div></pre></td></tr></table></figure>
+<h3 id="4-4-禁止删除变量"><a href="#4-4-禁止删除变量" class="headerlink" title="4.4 禁止删除变量"></a>4.4 禁止删除变量</h3><p>严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">var x;</div><div class="line">delete x; // 语法错误</div><div class="line">var o = Object.create(null, &#123;&apos;x&apos;: &#123;</div><div class="line">	value: 1,</div><div class="line">	configurable: true</div><div class="line">&#125;&#125;);</div><div class="line">delete o.x; // 删除成功</div></pre></td></tr></table></figure>
+<h3 id="4-5-显式报错"><a href="#4-5-显式报错" class="headerlink" title="4.5 显式报错"></a>4.5 显式报错</h3><p>正常模式下，对一个对象的只读属性进行赋值，不会报错，只会默默地失败。严格模式下，将报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">var o = &#123;&#125;;</div><div class="line">Object.defineProperty(o, &quot;v&quot;, &#123; value: 1, writable: false &#125;);</div><div class="line">o.v = 2; // 报错</div></pre></td></tr></table></figure>
+<p>严格模式下，对一个使用getter方法读取的属性进行赋值，会报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">var o = &#123;</div><div class="line">	get v() &#123; return 1; &#125;</div><div class="line">&#125;;</div><div class="line">o.v = 2; // 报错</div></pre></td></tr></table></figure>
+<p>严格模式下，对禁止扩展的对象添加新属性，会报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">var o = &#123;&#125;;</div><div class="line">Object.preventExtensions(o);</div><div class="line">o.v = 1; // 报错</div></pre></td></tr></table></figure>
+<p>严格模式下，删除一个不可删除的属性，会报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">delete Object.prototype; // 报错</div></pre></td></tr></table></figure>
+<h3 id="4-6-重名错误"><a href="#4-6-重名错误" class="headerlink" title="4.6 重名错误"></a>4.6 重名错误</h3><p>严格模式新增了一些语法错误。</p>
+<p>（1）对象不能有重名的属性</p>
+<p>正常模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">var o = &#123;</div><div class="line">	p: 1,</div><div class="line">	p: 2</div><div class="line">&#125;; // 语法错误</div></pre></td></tr></table></figure>
+<p>（2）函数不能有重名参数</p>
+<p>正常模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，这属于语法错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">function f(a, a, b) &#123; // 语法错误</div><div class="line">	return ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-8-arguments对象的限制"><a href="#4-8-arguments对象的限制" class="headerlink" title="4.8 arguments对象的限制"></a>4.8 arguments对象的限制</h3><p>arguments是函数的参数对象，严格模式对它的使用做了限制。</p>
+<p>（1）不允许对arguments赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">arguments++; // 语法错误</div><div class="line">var obj = &#123; set p(arguments) &#123; &#125; &#125;; // 语法错误</div><div class="line">try &#123; &#125; catch (arguments) &#123; &#125; // 语法错误</div><div class="line">function arguments() &#123; &#125; // 语法错误</div><div class="line">var f = new Function(&quot;arguments&quot;, &quot;&apos;use strict&apos;; return 17;&quot;); // 语法错误</div></pre></td></tr></table></figure>
+<p>（2）arguments不再追踪参数的变化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function f(a) &#123;</div><div class="line">	a = 2;</div><div class="line">	return [a, arguments[0]];</div><div class="line">&#125;</div><div class="line">f(1); // 正常模式为[2,2]</div><div class="line">function f(a) &#123;</div><div class="line">	&quot;use strict&quot;;</div><div class="line">	a = 2;</div><div class="line">	return [a, arguments[0]];</div><div class="line">&#125;</div><div class="line">f(1); // 严格模式为[2,1]</div></pre></td></tr></table></figure>
+<p>（3）禁止使用arguments.callee</p>
+<p>这意味着，你无法在匿名函数内部调用自身了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">var f = function() &#123; return arguments.callee; &#125;;</div><div class="line">f(); // 报错</div></pre></td></tr></table></figure>
+<h3 id="4-9-函数必须声明在顶层"><a href="#4-9-函数必须声明在顶层" class="headerlink" title="4.9 函数必须声明在顶层"></a>4.9 函数必须声明在顶层</h3><p>将来Javascript的新版本会引入”块级作用域”。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&quot;use strict&quot;;</div><div class="line">if (true) &#123;</div><div class="line">	function f() &#123; &#125; // 语法错误</div><div class="line">&#125;</div><div class="line">for (var i = 0; i &lt; 5; i++) &#123;</div><div class="line">	function f2() &#123; &#125; // 语法错误</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-10-保留字"><a href="#4-10-保留字" class="headerlink" title="4.10 保留字"></a>4.10 保留字</h3><p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。<br>使用这些词作为变量名将会报错。</p>
+<p>使用这些词作为变量名将会报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function package(protected) &#123; // 语法错误</div><div class="line">	&quot;use strict&quot;;</div><div class="line">	var implements; // 语法错误</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此外，ECMAscript第五版本身还规定了另一些保留字（class, enum, export, extends, import, super），以及各大浏览器自行增加的const保留字，也是不能作为变量名的。</p>
+<p>转自《阮一峰的网络日志》</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/personal-blog/public/categories/Javascript/">Javascript</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/严格模式/">严格模式</a></li></ul>
+
+      
+        <div id="donation_div"></div>
+
+<script src="/personal-blog/public/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/WeChanQR.png',
+  alipayImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/AliPayQR.jpg'
+});
+</script>
+      
+            
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/personal-blog/public/2017/03/28/filereader/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          图片上传预览的前端实现方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/personal-blog/public/2017/03/28/js-this/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Javascript之this详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入标志"><span class="nav-number">2.</span> <span class="nav-text">进入标志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何调用"><span class="nav-number">3.</span> <span class="nav-text">如何调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-针对整个脚本文件"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 针对整个脚本文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-针对单个函数"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 针对单个函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-脚本文件的变通写法"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 脚本文件的变通写法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法和行为改变"><span class="nav-number">4.</span> <span class="nav-text">语法和行为改变</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-全局变量显式声明"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 全局变量显式声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-静态绑定"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 静态绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-增强的安全措施"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 增强的安全措施</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-禁止删除变量"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 禁止删除变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-显式报错"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 显式报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-重名错误"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 重名错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-arguments对象的限制"><span class="nav-number">4.7.</span> <span class="nav-text">4.8 arguments对象的限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-9-函数必须声明在顶层"><span class="nav-number">4.8.</span> <span class="nav-text">4.9 函数必须声明在顶层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-10-保留字"><span class="nav-number">4.9.</span> <span class="nav-text">4.10 保留字</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 Qing的前端开发Blog All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+
+<!-- Custome JS -->
+<script src="/personal-blog/public/js/my.js"></script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/personal-blog/public/" class="mobile-nav-link">Home</a>
+  
+    <a href="/personal-blog/public/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/personal-blog/public/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/personal-blog/public/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/personal-blog/public/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/personal-blog/public/fancybox/jquery.fancybox.css">
+  <script src="/personal-blog/public/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/personal-blog/public/js/scripts.js"></script>
+<script src="/personal-blog/public/js/bootstrap.js"></script>
+<script src="/personal-blog/public/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
+<style>
+.donate-btn {
+    display: none;
+}
+.originBgDiv {
+    display: none;
+}
+</style>

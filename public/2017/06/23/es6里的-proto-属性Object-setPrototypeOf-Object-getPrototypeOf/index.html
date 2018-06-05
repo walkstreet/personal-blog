@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <!-- PACE Progress Bar START -->
+  
+    <script src="/personal-blog/public/js/pace.min.js"></script>
+    <link rel="stylesheet" href="https://github.com/HubSpot/pace/raw/master/themes/orange/pace-theme-flash.css">
+  
+  
+
+  <!-- PACE Progress Bar START -->
+
+  
+  <title>es6里的__proto__ 属性,object.setprototypeof(),object.getprototypeof() | Qing的前端开发Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="ES6类" />
+  
+  
+  
+  
+  <meta name="description" content="（ 1 ）proto 属性proto属性（前后各两个下划线），用来读取或设置当前对象的prototype对象。目前，所有浏览器（包括 IE11 ）都部署了这个属性。
+12345678// es6 的写法  var obj = &amp;#123;      method: function() &amp;#123; ... &amp;#125;  &amp;#125;;  obj.__proto__ = someOtherObj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6里的__proto__ 属性,Object.setPrototypeOf(),Object.getPrototypeOf()">
+<meta property="og:url" content="https://walkstreet.github.io/personal-blog/public/2017/06/23/es6里的-proto-属性Object-setPrototypeOf-Object-getPrototypeOf/index.html">
+<meta property="og:site_name" content="Qing的前端开发Blog">
+<meta property="og:description" content="（ 1 ）proto 属性proto属性（前后各两个下划线），用来读取或设置当前对象的prototype对象。目前，所有浏览器（包括 IE11 ）都部署了这个属性。
+12345678// es6 的写法  var obj = &amp;#123;      method: function() &amp;#123; ... &amp;#125;  &amp;#125;;  obj.__proto__ = someOtherObj">
+<meta property="og:updated_time" content="2018-02-23T09:47:02.457Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6里的__proto__ 属性,Object.setPrototypeOf(),Object.getPrototypeOf()">
+<meta name="twitter:description" content="（ 1 ）proto 属性proto属性（前后各两个下划线），用来读取或设置当前对象的prototype对象。目前，所有浏览器（包括 IE11 ）都部署了这个属性。
+12345678// es6 的写法  var obj = &amp;#123;      method: function() &amp;#123; ... &amp;#125;  &amp;#125;;  obj.__proto__ = someOtherObj">
+  
+    <link rel="alternate" href="/atom.xml" title="Qing的前端开发Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/personal-blog/public/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/personal-blog/public/css/style.css">
+
+  <script src="/personal-blog/public/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/personal-blog/public/css/bootstrap.css" >
+  <link rel="stylesheet" href="/personal-blog/public/css/hiero.css" >
+  <link rel="stylesheet" href="/personal-blog/public/css/glyphs.css" >
+  
+    <link rel="stylesheet" href="/personal-blog/public/css/vdonate.css" >
+  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/personal-blog/public/css/my.css">
+  <!-- Google Adsense -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-0123456789ABCDEF",
+          enable_page_level_ads: true
+      });
+  </script>
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/personal-blog/public/"] = "首页"; 
+
+  themeMenus["/personal-blog/public/archives"] = "归档"; 
+
+  themeMenus["/personal-blog/public/categories"] = "分类"; 
+
+  themeMenus["/personal-blog/public/tags"] = "标签"; 
+
+  themeMenus["/personal-blog/public/about"] = "关于"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/personal-blog/public/" title="Qing的前端开发Blog" rel="home"> Qing的前端开发Blog </a>
+            
+          </h1>
+
+          
+            <div class="site-description">Web前端开发文档整理</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="originBgDiv" style="background: #fff; width: 100%;">
+
+      <div style="max-height:600px; overflow: hidden;  display: flex; display: -webkit-flex; align-items: center;">
+        <img id="originBg" width="100%" alt="" src="">
+      </div>
+
+  </div>
+
+  <script>
+  function setAboutIMG(){
+      var imgUrls = "css/images/pose.jpg,https://source.unsplash.com/collection/954550/1920x1080".split(",");
+      var random = Math.floor((Math.random() * imgUrls.length ));
+      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+        document.getElementById("originBg").src=imgUrls[random];
+      } else {
+        document.getElementById("originBg").src='/personal-blog/public/' + imgUrls[random];
+      }
+  }
+  bgDiv=document.getElementById("originBgDiv");
+  if(location.pathname.match('about')){
+    setAboutIMG();
+    bgDiv.style.display='block';
+  }else{
+    bgDiv.style.display='none';
+  }
+  </script>
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-es6里的-proto-属性Object-setPrototypeOf-Object-getPrototypeOf" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      es6里的__proto__ 属性,Object.setPrototypeOf(),Object.getPrototypeOf()
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/personal-blog/public/2017/06/23/es6里的-proto-属性Object-setPrototypeOf-Object-getPrototypeOf/" class="article-date">
+	  <time datetime="2017-06-23T09:20:33.000Z" itemprop="datePublished">六月 23, 2017</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>（ 1 ）<strong>proto</strong> 属性<br><strong>proto</strong>属性（前后各两个下划线），用来读取或设置当前对象的prototype对象。目前，所有浏览器（包括 IE11 ）都部署了这个属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// es6 的写法  </div><div class="line">var obj = &#123;  </div><div class="line">    method: function() &#123; ... &#125;  </div><div class="line">&#125;;  </div><div class="line">obj.__proto__ = someOtherObj;  </div><div class="line">// es5 的写法  </div><div class="line">var obj = Object.create(someOtherObj);  </div><div class="line">obj.method = function() &#123; ... &#125;;</div></pre></td></tr></table></figure>
+<p>该属性没有写入 ES6 的正文，而是写入了附录，原因是<strong>proto</strong>前后的双下划线，说明它本质上是一个内部属性，而不是一个正式的对外的 API ，只是由于浏览器广泛支持，才被加入了 ES6 。标准明确规定，只有浏览器必须部署这个属性，其他运行环境不一定需要部署，而且新的代码最好认为这个属性是不存在的。因此，无论从语义的角度，还是从兼容性的角度，都不要使用这个属性，而是使用下面的Object.setPrototypeOf()（写操作）、Object.getPrototypeOf()（读操作）、Object.create()（生成操作）代替。<br>在实现上，<strong>proto</strong>调用的是Object.prototype.<strong>proto</strong>，具体实现如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">Object.defineProperty(Object.prototype, &apos;__proto__&apos;, &#123;  </div><div class="line">    get() &#123;  </div><div class="line">        let _thisObj = Object(this);  </div><div class="line">        return Object.getPrototypeOf(_thisObj);  </div><div class="line">    &#125;,  </div><div class="line">    set(proto) &#123;  </div><div class="line">        if (this === undefined || this === null) &#123;  </div><div class="line">            throw new TypeError();  </div><div class="line">        &#125;  </div><div class="line">        if (!isObject(this)) &#123;  </div><div class="line">            return undefined;  </div><div class="line">        &#125;  </div><div class="line">        if (!isObject(proto)) &#123;  </div><div class="line">            return undefined;  </div><div class="line">        &#125;  </div><div class="line">        let status = Reflect.setPrototypeOf(this, proto);  </div><div class="line">        if (!status) &#123;  </div><div class="line">            throw new TypeError();  </div><div class="line">        &#125;  </div><div class="line">    &#125;,  </div><div class="line">&#125;);  </div><div class="line">function isObject(value) &#123;  </div><div class="line">    return Object(value) === value;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果一个对象本身部署了<strong>proto</strong>属性，则该属性的值就是对象的原型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Object.getPrototypeOf(&#123; __proto__: null &#125;)  </div><div class="line">// null</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>（ 2 ） Object.setPrototypeOf()<br>Object.setPrototypeOf方法的作用与<strong>proto</strong>相同，用来设置一个对象的prototype对象。它是 ES6 正式推荐的设置原型对象的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//  格式  </div><div class="line">Object.setPrototypeOf(object, prototype)  </div><div class="line">//  用法  </div><div class="line">var o = Object.setPrototypeOf(&#123;&#125;, null);  </div><div class="line">//该方法等同于下面的函数。  </div><div class="line">function (obj, proto) &#123;  </div><div class="line">    obj.__proto__ = proto;  </div><div class="line">    return obj;  </div><div class="line">&#125;  </div><div class="line">//下面是一个例子。  </div><div class="line">let proto = &#123;&#125;;  </div><div class="line">let obj = &#123; x: 10 &#125;;  </div><div class="line">Object.setPrototypeOf(obj, proto);  </div><div class="line">proto.y = 20;  </div><div class="line">proto.z = 40;  </div><div class="line">obj.x // 10  </div><div class="line">obj.y // 20  </div><div class="line">obj.z // 40</div></pre></td></tr></table></figure>
+<p>上面代码将 proto 对象设为 obj 对象的原型，所以从 obj 对象可以读取 proto 对象的属性。<br>（ 3 ） Object.getPrototypeOf()<br>该方法与 setPrototypeOf 方法配套，用于读取一个对象的 prototype 对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Object.getPrototypeOf(obj);  </div><div class="line">//下面是一个例子。  </div><div class="line">function Rectangle() &#123;  </div><div class="line">&#125;  </div><div class="line">var rec = new Rectangle();  </div><div class="line">Object.getPrototypeOf(rec) === Rectangle.prototype  </div><div class="line">// true  </div><div class="line">Object.setPrototypeOf(rec, Object.prototype);  </div><div class="line">Object.getPrototypeOf(rec) === Rectangle.prototype  </div><div class="line">// false</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/personal-blog/public/categories/Javascript/">Javascript</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/ES6/">ES6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/类/">类</a></li></ul>
+
+      
+        <div id="donation_div"></div>
+
+<script src="/personal-blog/public/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/WeChanQR.png',
+  alipayImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/AliPayQR.jpg'
+});
+</script>
+      
+            
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/personal-blog/public/2018/05/19/react-components-context/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          React组件间通信
+        
+      </div>
+    </a>
+  
+  
+    <a href="/personal-blog/public/2017/06/23/浅谈super如何实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">浅谈super如何实现</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav">无</ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 Qing的前端开发Blog All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+
+<!-- Custome JS -->
+<script src="/personal-blog/public/js/my.js"></script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/personal-blog/public/" class="mobile-nav-link">Home</a>
+  
+    <a href="/personal-blog/public/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/personal-blog/public/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/personal-blog/public/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/personal-blog/public/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/personal-blog/public/fancybox/jquery.fancybox.css">
+  <script src="/personal-blog/public/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/personal-blog/public/js/scripts.js"></script>
+<script src="/personal-blog/public/js/bootstrap.js"></script>
+<script src="/personal-blog/public/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
+<style>
+.donate-btn {
+    display: none;
+}
+.originBgDiv {
+    display: none;
+}
+</style>

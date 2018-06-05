@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <!-- PACE Progress Bar START -->
+  
+    <script src="/personal-blog/public/js/pace.min.js"></script>
+    <link rel="stylesheet" href="https://github.com/HubSpot/pace/raw/master/themes/orange/pace-theme-flash.css">
+  
+  
+
+  <!-- PACE Progress Bar START -->
+
+  
+  <title>移动端h5页面注意事项 | Qing的前端开发Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="移动端" />
+  
+  
+  
+  
+  <meta name="description" content="单个页面内容不能过多设计常用尺寸：750 x 1334 / 640 x 1134，包含了手机顶部信号栏的高度。
+移动端H5活动页面常常需要能够分享到各种社交App中，常用的有 微信、QQ 等。
+使用移动设备查看页面时会发现，在微信浏览器中有顶部导航栏，在qq内置浏览器里不止有 顶部导航，底部也有 操作栏（safari浏览器也一样），这些都会占用设计稿显示区域，因此在 设计环节 就需要考虑内容的多少">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端H5页面注意事项">
+<meta property="og:url" content="https://walkstreet.github.io/personal-blog/public/2017/04/05/h5notice/index.html">
+<meta property="og:site_name" content="Qing的前端开发Blog">
+<meta property="og:description" content="单个页面内容不能过多设计常用尺寸：750 x 1334 / 640 x 1134，包含了手机顶部信号栏的高度。
+移动端H5活动页面常常需要能够分享到各种社交App中，常用的有 微信、QQ 等。
+使用移动设备查看页面时会发现，在微信浏览器中有顶部导航栏，在qq内置浏览器里不止有 顶部导航，底部也有 操作栏（safari浏览器也一样），这些都会占用设计稿显示区域，因此在 设计环节 就需要考虑内容的多少">
+<meta property="og:updated_time" content="2018-02-23T09:47:02.457Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动端H5页面注意事项">
+<meta name="twitter:description" content="单个页面内容不能过多设计常用尺寸：750 x 1334 / 640 x 1134，包含了手机顶部信号栏的高度。
+移动端H5活动页面常常需要能够分享到各种社交App中，常用的有 微信、QQ 等。
+使用移动设备查看页面时会发现，在微信浏览器中有顶部导航栏，在qq内置浏览器里不止有 顶部导航，底部也有 操作栏（safari浏览器也一样），这些都会占用设计稿显示区域，因此在 设计环节 就需要考虑内容的多少">
+  
+    <link rel="alternate" href="/atom.xml" title="Qing的前端开发Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/personal-blog/public/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/personal-blog/public/css/style.css">
+
+  <script src="/personal-blog/public/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/personal-blog/public/css/bootstrap.css" >
+  <link rel="stylesheet" href="/personal-blog/public/css/hiero.css" >
+  <link rel="stylesheet" href="/personal-blog/public/css/glyphs.css" >
+  
+    <link rel="stylesheet" href="/personal-blog/public/css/vdonate.css" >
+  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/personal-blog/public/css/my.css">
+  <!-- Google Adsense -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-0123456789ABCDEF",
+          enable_page_level_ads: true
+      });
+  </script>
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/personal-blog/public/"] = "首页"; 
+
+  themeMenus["/personal-blog/public/archives"] = "归档"; 
+
+  themeMenus["/personal-blog/public/categories"] = "分类"; 
+
+  themeMenus["/personal-blog/public/tags"] = "标签"; 
+
+  themeMenus["/personal-blog/public/about"] = "关于"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/personal-blog/public/" title="Qing的前端开发Blog" rel="home"> Qing的前端开发Blog </a>
+            
+          </h1>
+
+          
+            <div class="site-description">Web前端开发文档整理</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="originBgDiv" style="background: #fff; width: 100%;">
+
+      <div style="max-height:600px; overflow: hidden;  display: flex; display: -webkit-flex; align-items: center;">
+        <img id="originBg" width="100%" alt="" src="">
+      </div>
+
+  </div>
+
+  <script>
+  function setAboutIMG(){
+      var imgUrls = "css/images/pose.jpg,https://source.unsplash.com/collection/954550/1920x1080".split(",");
+      var random = Math.floor((Math.random() * imgUrls.length ));
+      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+        document.getElementById("originBg").src=imgUrls[random];
+      } else {
+        document.getElementById("originBg").src='/personal-blog/public/' + imgUrls[random];
+      }
+  }
+  bgDiv=document.getElementById("originBgDiv");
+  if(location.pathname.match('about')){
+    setAboutIMG();
+    bgDiv.style.display='block';
+  }else{
+    bgDiv.style.display='none';
+  }
+  </script>
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-h5notice" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      移动端H5页面注意事项
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/personal-blog/public/2017/04/05/h5notice/" class="article-date">
+	  <time datetime="2017-04-05T08:11:32.000Z" itemprop="datePublished">四月 5, 2017</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="单个页面内容不能过多"><a href="#单个页面内容不能过多" class="headerlink" title="单个页面内容不能过多"></a>单个页面内容不能过多</h2><p>设计常用尺寸：750 x 1334 / 640 x 1134，包含了手机顶部信号栏的高度。</p>
+<p>移动端H5活动页面常常需要能够分享到各种社交App中，常用的有 微信、QQ 等。</p>
+<p>使用移动设备查看页面时会发现，在微信浏览器中有顶部导航栏，在qq内置浏览器里不止有 顶部导航，底部也有 操作栏（safari浏览器也一样），这些都会占用设计稿显示区域，因此在 设计环节 就需要考虑内容的多少，页面底部要 预留一定的空白，这样在微信或qq中才不会被遮住。</p>
+<p>如下图（QQ内置浏览器）：页面设计尺寸为 750 x 1334，顶部占用 150px，底部占用 110px，共占用了 260px，因此设计稿内容应控制在 1334-260=1074px 的高度内。编写代码时，使用 Chrome 浏览器模拟设备大小，将该尺寸（750*1074）存下来，用于实时查看移动端页面效果。</p>
+<blockquote>
+<p>如果页面已经写好了，就只能按照上面的尺寸进行内容的调整了，缩小元素间距，缩放图片大小等。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="失败经历"><a href="#失败经历" class="headerlink" title="失败经历"></a>失败经历</h3><ul>
+<li><p>如果对整个页面进行缩放（使用 meta 标签），按照设计稿的比例，在高度满足的情况下宽度会偏小，两边会有白底；</p>
+</li>
+<li><p>就算使用 rem 作为相关间距的单位，也没有办法找到一个合适的比例在两种高度（微信/QQ）下切换，因此统一调成适配 QQ 的，这样就算在微信下有多余的空白，固定底部的引导下滑箭头也能使其不会过于突兀。</p>
+</li>
+</ul>
+<h2 id="标题简短"><a href="#标题简短" class="headerlink" title="标题简短"></a>标题简短</h2><p>移动端浏览器导航条宽度有限，简短的标题可以使其展示完整。</p>
+<h2 id="二维码图片使用-img-标签引入"><a href="#二维码图片使用-img-标签引入" class="headerlink" title="二维码图片使用 img 标签引入"></a>二维码图片使用 img 标签引入</h2><p>二维码图片不要写为元素背景，不然长按没有办法触发扫描功能。应使用 img 标签引入，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;img src=&quot;images/qrcode.png&quot; title=&quot;&quot; alt=&quot;&quot;&gt;</div></pre></td></tr></table></figure>
+<p>这样会阻止部分用户继续访问，从而无法很好的将用户引导到活动想要推广的产品/品牌页面，如 App 的下载页面等。因此二维码的扫描测试不能少。</p>
+<blockquote>
+<p>举个例子，如果二维码扫描结果是应用的下载地址的话，可以使用应用宝的微下载地址来生成二维码，这是不会被“温馨提醒”的。</p>
+</blockquote>
+<h2 id="使用Gulp拼合图片"><a href="#使用Gulp拼合图片" class="headerlink" title="使用Gulp拼合图片"></a>使用Gulp拼合图片</h2><p>如果打算先布局，后使用自动化工具将图片拼起来，减少请求数，需要注意：在编写 CSS 的时候，图片宽高应固定，图片拼合后才能通过定位和显示区域的宽高来展示图片。</p>
+<blockquote>
+<p>举个例子，如果布局时 width: 100%; background-position: center;，使用工具拼合图片后，该元素区域（100% 的宽度）内会将其他图片显示出来，这不是我们想要看到的。</p>
+</blockquote>
+<h2 id="关于链接的分享-QQ"><a href="#关于链接的分享-QQ" class="headerlink" title="关于链接的分享-QQ"></a>关于链接的分享-QQ</h2><p>如果将页面链接直接复制分享给其他人，在手机上接收链接消息的用户可能会看到链接的相关信息，如页面标题、描述和图片。相关信息设置方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;title&gt;QQ中链接的标题由此处获取&lt;/title&gt;</div><div class="line">&lt;meta name=&quot;description&quot; content=&quot;QQ中链接的描述由此处获取&quot;&gt;</div><div class="line">&lt;!-- QQ默认获取的图片有可能出现缩放问题，效果不佳，可以通过如下方法进行设置 --&gt;</div><div class="line">&lt;meta itemprop=&quot;image&quot; content=&quot;http://*.*.com/static/images/share.png&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>问题：即使使用了如上的 image 设置方法，还是没能显示预期图片？<br>解决：确定下你发送的链接格式，会不会有所省略，如：somedomain/ 或者 somedomain/index，正确的应为 somedomain/index.html，才能正确解析到图片。</p>
+<p>如果是打开链接后，在QQ内置浏览器里选择将页面分享出去，那一般不会出错。</p>
+<h2 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h2><p>使用自动化工具 gulp-imagemin（教程） 来压缩图片，效果举例：101 KB =&gt; 80.7 KB。后来我使用了在线工具 Tinypng 又进行了一次压缩，效果举例：（上面使用 gulp-imagemin 压缩过的图片）80.7 KB =&gt; 38.1 KB，可见光使用自动化工具来压缩是不够的，大部分图片仍存在较大的压缩空间，可以再扔到 Tinypng 里压缩一下看看。</p>
+<blockquote>
+<p>在线的 Tinypng 可以无限次使用，如果想要使用其 API 来进行压缩自动化的话，可以使用 gulp-tinypng 等插件，但是有每月压缩图片数量限制，每月前500张图片免费，其他收费情况参考官网说明。使用其 API 还需要获取 API Key，这里可以获取。<br>个人觉得想要免费的话使用 API 会有数量限制，时刻惦记着数量有点心累，不如直接使用在线工具，也不麻烦~</p>
+</blockquote>
+<h2 id="Loading"><a href="#Loading" class="headerlink" title="Loading"></a>Loading</h2><p>首屏 Loading，代码段分享，拿走即用~</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">function loading()&#123;</div><div class="line"></div><div class="line">    function Load()&#123;&#125;</div><div class="line"></div><div class="line">    Load.prototype.loadImgs = function(urls,callback) &#123;</div><div class="line">        this.urls = urls;</div><div class="line">        this.imgNumbers = urls.length;</div><div class="line">        this.loadImgNumbers = 0;</div><div class="line">        var that =this;</div><div class="line">        for(var i=0;i&lt;urls.length;i++)&#123;</div><div class="line">            var obj = new Image();</div><div class="line">            obj.src = urls[i];</div><div class="line">            obj.onload = function()&#123;</div><div class="line">                that.loadImgNumbers++;</div><div class="line">                callback(parseInt((that.loadImgNumbers/that.imgNumbers)*100));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    var loader = new Load();</div><div class="line"></div><div class="line">    loader.loadImgs([</div><div class="line">        // 将所有需要加载的图片地址写于此处</div><div class="line">        &quot;http://domain/site/dist/img/XX.png&quot;,</div><div class="line">        &quot;http://domain/site/dist/img/XX.png&quot;,</div><div class="line">        &quot;http://domain/site/dist/img/XX.png&quot;,</div><div class="line">        &quot;http://domain/site/dist/img/XX.png&quot;,</div><div class="line">        &quot;http://domain/site/dist/img/XX.png&quot;,</div><div class="line">        &quot;http://domain/site/dist/img/XX.png&quot;,</div><div class="line">        &quot;http://domain/site/dist/img/XX.png&quot;</div><div class="line">    ],function(percent)&#123;</div><div class="line">        // 假设显示百分比的元素为 $(&quot;.percent&quot;)</div><div class="line">        $(&quot;.percent&quot;).text(percent+&apos;%&apos;);</div><div class="line"></div><div class="line">        // 加载结束后，隐藏相应的 loading 或遮罩 </div><div class="line">        if(percent==100) &#123;</div><div class="line">            $(&quot;.mask&quot;).css(&apos;display&apos;,&apos;none&apos;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 执行 loading 方法</div><div class="line">loading();</div></pre></td></tr></table></figure>
+<h2 id="CSS动画属性前缀-webkit"><a href="#CSS动画属性前缀-webkit" class="headerlink" title="CSS动画属性前缀 webkit"></a>CSS动画属性前缀 webkit</h2><p>使用 CSS3 来制作动画效果的话，webkit 前缀一定记得加，要不然在某些手机下动画效果是没有的。</p>
+<p>如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">-webkit-animation: f .8s 2s forwards ease-in-out;</div><div class="line">animation: f .8s 2s forwards ease-in-out;</div><div class="line"></div><div class="line">@-webkit-keyframes f &#123;</div><div class="line">    0% &#123;</div><div class="line">        opacity: 0;</div><div class="line">        -webkit-transform: translate3d(750px,0,0);</div><div class="line">        transform: translate3d(750px,0,0)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    to &#123;</div><div class="line">        opacity: 1;</div><div class="line">        -webkit-transform: translateZ(0);</div><div class="line">        transform: translateZ(0)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@keyframes f &#123;</div><div class="line">    0% &#123;</div><div class="line">        opacity: 0;</div><div class="line">        -webkit-transform: translate3d(750px,0,0);</div><div class="line">        transform: translate3d(750px,0,0)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    to &#123;</div><div class="line">        opacity: 1;</div><div class="line">        -webkit-transform: translateZ(0);</div><div class="line">        transform: translateZ(0)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>推荐使用自动化工具来处理未加前缀的 CSS 文件，如 gulp-autoprefixer。</p>
+<h2 id="Swiper-js-amp-Animate-css"><a href="#Swiper-js-amp-Animate-css" class="headerlink" title="Swiper.js &amp; Animate.css"></a>Swiper.js &amp; Animate.css</h2><p>你只需要 Swiper.js 和 Animate.css 即可打造（简单的）移动端 H5 活动页面~<br>Swiper 是纯 javascript 打造的滑动特效插件，面向手机、平板电脑等移动终端。<br>Animate.css 是纯 CSS 编写而成的动画库，包含多种常见的 CSS 动画。<br>引用 Swiper.js，同时在 Animate.css 中寻找需要的动画效果复制粘贴进 css 文件即可，完全不必引用 Animate.css。</p>
+<h2 id="使用-Meta-标签进行页面缩放"><a href="#使用-Meta-标签进行页面缩放" class="headerlink" title="使用 Meta 标签进行页面缩放"></a>使用 Meta 标签进行页面缩放</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 以下代码默认设计稿尺寸为 640 x 1134 --&gt;</div><div class="line">&lt;meta id=&quot;viewport&quot; content=&quot;width=device-width, user-scalable=yes,initial-scale=1&quot; name=&quot;viewport&quot; /&gt;</div><div class="line">&lt;script&gt;</div><div class="line">    var detectBrowser = function(name) &#123;</div><div class="line">        if(navigator.userAgent.toLowerCase().indexOf(name) &gt; -1) &#123;</div><div class="line">            return true;</div><div class="line">        &#125; else &#123;</div><div class="line">            return false;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    var width = parseInt(window.screen.width);</div><div class="line">    var scale = width/640;  // 根据设计稿尺寸进行相应修改：640=&gt;?</div><div class="line">    var userScalable = &apos;no&apos;;</div><div class="line">    if(detectBrowser(&quot;qq/&quot;)) userScalable = &apos;yes&apos;;</div><div class="line">    document.getElementById(&apos;viewport&apos;).setAttribute(</div><div class="line">            &apos;content&apos;, &apos;target-densitydpi=device-dpi,width=640,user-scalable=&apos;+userScalable+&apos;,initial-scale=&apos; + scale); // 这里也别忘了改：640=&gt;?</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>利用 meta 标签对页面进行缩放，使得我们可以直接根据设计稿来进行页面的编写，不用再进行单位的换算等等，省却了很多麻烦。</p>
+<h2 id="微信二维码问题"><a href="#微信二维码问题" class="headerlink" title="微信二维码问题"></a>微信二维码问题</h2><p>01：同一个页面里要是有两个二维码，长按扫描总是只能扫出 左侧/第一个 二维码。<br>解决：可视区域内只能出现一个二维码。</p>
+<p>02：使用 meta 标签缩放页面后长按二维码图片无反应。<br>解决：使用了以下代码之后，就能长按识别二维码了~</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!--同一张二维码图片--&gt;</div><div class="line">&lt;!--下面这张 opacity 为 0，隐藏起来，但是实际存在，并且宽为 100%，屏幕有多大就多大--&gt;</div><div class="line">&lt; img style=&quot;right:0; top:0; height: auto;width: 100%;opacity: 0;position: absolute;&quot; src=&quot;二维码图片地址&quot;&gt;</div><div class="line">&lt;!--下面这张是呈现给用户看的--&gt;</div><div class="line">&lt; img src=&quot;二维码图片地址&quot; title=&quot;qrcode&quot; alt=&quot;qrcode&quot;&gt;</div><div class="line">&lt;!--PS: img 标签前面的空格记得去掉，这里加上空格是因为简书有 bug，针对 img 标签代码渲染会出错--&gt;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/personal-blog/public/categories/H5/">H5</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/移动端/">移动端</a></li></ul>
+
+      
+        <div id="donation_div"></div>
+
+<script src="/personal-blog/public/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/WeChanQR.png',
+  alipayImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/AliPayQR.jpg'
+});
+</script>
+      
+            
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/personal-blog/public/2017/04/06/vue-component/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Vue2.0父子组件以及非父子组件如何通信
+        
+      </div>
+    </a>
+  
+  
+    <a href="/personal-blog/public/2017/03/30/property/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">如何评价页面的性能</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单个页面内容不能过多"><span class="nav-number">1.</span> <span class="nav-text">单个页面内容不能过多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#失败经历"><span class="nav-number">1.1.</span> <span class="nav-text">失败经历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标题简短"><span class="nav-number">2.</span> <span class="nav-text">标题简短</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二维码图片使用-img-标签引入"><span class="nav-number">3.</span> <span class="nav-text">二维码图片使用 img 标签引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Gulp拼合图片"><span class="nav-number">4.</span> <span class="nav-text">使用Gulp拼合图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于链接的分享-QQ"><span class="nav-number">5.</span> <span class="nav-text">关于链接的分享-QQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片压缩"><span class="nav-number">6.</span> <span class="nav-text">图片压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Loading"><span class="nav-number">7.</span> <span class="nav-text">Loading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS动画属性前缀-webkit"><span class="nav-number">8.</span> <span class="nav-text">CSS动画属性前缀 webkit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swiper-js-amp-Animate-css"><span class="nav-number">9.</span> <span class="nav-text">Swiper.js & Animate.css</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Meta-标签进行页面缩放"><span class="nav-number">10.</span> <span class="nav-text">使用 Meta 标签进行页面缩放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信二维码问题"><span class="nav-number">11.</span> <span class="nav-text">微信二维码问题</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 Qing的前端开发Blog All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+
+<!-- Custome JS -->
+<script src="/personal-blog/public/js/my.js"></script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/personal-blog/public/" class="mobile-nav-link">Home</a>
+  
+    <a href="/personal-blog/public/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/personal-blog/public/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/personal-blog/public/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/personal-blog/public/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/personal-blog/public/fancybox/jquery.fancybox.css">
+  <script src="/personal-blog/public/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/personal-blog/public/js/scripts.js"></script>
+<script src="/personal-blog/public/js/bootstrap.js"></script>
+<script src="/personal-blog/public/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
+<style>
+.donate-btn {
+    display: none;
+}
+.originBgDiv {
+    display: none;
+}
+</style>
