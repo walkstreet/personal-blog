@@ -5,7 +5,7 @@
 
   <!-- PACE Progress Bar START -->
   
-    <script src="/personal-blog/public/js/pace.min.js"></script>
+    <script src="/personal-blog/js/pace.min.js"></script>
     <link rel="stylesheet" href="https://github.com/HubSpot/pace/raw/master/themes/orange/pace-theme-flash.css">
   
   
@@ -29,7 +29,7 @@ PromisePromise是一个构造函数，自己身上有all、reject、resolve这�
 接下来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Promise详解">
-<meta property="og:url" content="https://walkstreet.github.io/personal-blog/public/2017/06/06/promise/index.html">
+<meta property="og:url" content="https://walkstreet.github.io/personal-blog/2017/06/06/promise/index.html">
 <meta property="og:site_name" content="Qing的前端开发Blog">
 <meta property="og:description" content="Promise在ES2015（ES6）正式规范中，这篇文章详解Promise基本概念和使用方法。
 PromisePromise是一个构造函数，自己身上有all、reject、resolve这几个眼熟的方法，原型上有then、catch等同样很眼熟的方法。这么说用Promise new出来的对象肯定就有then、catch方法。
@@ -49,7 +49,7 @@ PromisePromise是一个构造函数，自己身上有all、reject、resolve这�
   
     <link rel="alternate" href="/atom.xml" title="Qing的前端开发Blog" type="application/atom+xml">
   
-  <link rel="icon" href="/personal-blog/public/css/images/favicon.ico">
+  <link rel="icon" href="/personal-blog/css/images/favicon.ico">
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
@@ -63,20 +63,20 @@ PromisePromise是一个构造函数，自己身上有all、reject、resolve这�
     @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
     
   <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
-  <link rel="stylesheet" href="/personal-blog/public/css/style.css">
+  <link rel="stylesheet" href="/personal-blog/css/style.css">
 
-  <script src="/personal-blog/public/js/jquery-3.1.1.min.js"></script>
+  <script src="/personal-blog/js/jquery-3.1.1.min.js"></script>
 
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/personal-blog/public/css/bootstrap.css" >
-  <link rel="stylesheet" href="/personal-blog/public/css/hiero.css" >
-  <link rel="stylesheet" href="/personal-blog/public/css/glyphs.css" >
+  <link rel="stylesheet" href="/personal-blog/css/bootstrap.css" >
+  <link rel="stylesheet" href="/personal-blog/css/hiero.css" >
+  <link rel="stylesheet" href="/personal-blog/css/glyphs.css" >
   
-    <link rel="stylesheet" href="/personal-blog/public/css/vdonate.css" >
+    <link rel="stylesheet" href="/personal-blog/css/vdonate.css" >
   
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="/personal-blog/public/css/my.css">
+  <link rel="stylesheet" href="/personal-blog/css/my.css">
   <!-- Google Adsense -->
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -90,15 +90,15 @@ PromisePromise是一个构造函数，自己身上有all、reject、resolve这�
 <script>
 var themeMenus = {};
 
-  themeMenus["/personal-blog/public/"] = "首页"; 
+  themeMenus["/personal-blog/"] = "首页"; 
 
-  themeMenus["/personal-blog/public/archives"] = "归档"; 
+  themeMenus["/personal-blog/archives"] = "归档"; 
 
-  themeMenus["/personal-blog/public/categories"] = "分类"; 
+  themeMenus["/personal-blog/categories"] = "分类"; 
 
-  themeMenus["/personal-blog/public/tags"] = "标签"; 
+  themeMenus["/personal-blog/tags"] = "标签"; 
 
-  themeMenus["/personal-blog/public/about"] = "关于"; 
+  themeMenus["/personal-blog/about"] = "关于"; 
 
 </script>
 
@@ -112,7 +112,7 @@ var themeMenus = {};
 
           <h1 class="site-title">
             
-              <a href="/personal-blog/public/" title="Qing的前端开发Blog" rel="home"> Qing的前端开发Blog </a>
+              <a href="/personal-blog/" title="Qing的前端开发Blog" rel="home"> Qing的前端开发Blog </a>
             
           </h1>
 
@@ -127,15 +127,15 @@ var themeMenus = {};
 
               <ul id="main-nav" class="nmenu sf-js-enabled">
                     
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/">首页</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/">首页</a> </li>
                     
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/archives">归档</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/archives">归档</a> </li>
                     
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/categories">分类</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/categories">分类</a> </li>
                     
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/tags">标签</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/tags">标签</a> </li>
                     
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/about">关于</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/about">关于</a> </li>
                     
               </ul>
             </div>
@@ -162,7 +162,7 @@ var themeMenus = {};
       if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
         document.getElementById("originBg").src=imgUrls[random];
       } else {
-        document.getElementById("originBg").src='/personal-blog/public/' + imgUrls[random];
+        document.getElementById("originBg").src='/personal-blog/' + imgUrls[random];
       }
   }
   bgDiv=document.getElementById("originBgDiv");
@@ -197,7 +197,7 @@ var themeMenus = {};
     
     <div class="article-meta">
       
-	Posted on <a href="/personal-blog/public/2017/06/06/promise/" class="article-date">
+	Posted on <a href="/personal-blog/2017/06/06/promise/" class="article-date">
 	  <time datetime="2017-06-06T02:15:19.000Z" itemprop="datePublished">六月 6, 2017</time>
 	</a>
 
@@ -274,16 +274,16 @@ var themeMenus = {};
     <footer class="entry-meta entry-footer">
       
 	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/personal-blog/public/categories/Javascript/">Javascript</a>
+    <a class="article-category-link" href="/personal-blog/categories/Javascript/">Javascript</a>
 
       
   <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/ajax/">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/promise/">promise</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/tags/ajax/">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/tags/promise/">promise</a></li></ul>
 
       
         <div id="donation_div"></div>
 
-<script src="/personal-blog/public/js/vdonate.js"></script>
+<script src="/personal-blog/js/vdonate.js"></script>
 <script>
 var a = new Donate({
   title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
@@ -326,7 +326,7 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/personal-blog/public/2017/06/14/ES7的async和await/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/personal-blog/2017/06/14/ES7的async和await/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
@@ -336,7 +336,7 @@ var a = new Donate({
     </a>
   
   
-    <a href="/personal-blog/public/2017/05/16/es6开发规范/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/personal-blog/2017/05/16/es6开发规范/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">ES6规范</div>
     </a>
@@ -388,19 +388,19 @@ var a = new Donate({
 </script>
 
 <!-- Custome JS -->
-<script src="/personal-blog/public/js/my.js"></script>
+<script src="/personal-blog/js/my.js"></script>
     </div>
     <!-- <nav id="mobile-nav">
   
-    <a href="/personal-blog/public/" class="mobile-nav-link">Home</a>
+    <a href="/personal-blog/" class="mobile-nav-link">Home</a>
   
-    <a href="/personal-blog/public/archives" class="mobile-nav-link">Archives</a>
+    <a href="/personal-blog/archives" class="mobile-nav-link">Archives</a>
   
-    <a href="/personal-blog/public/categories" class="mobile-nav-link">Categories</a>
+    <a href="/personal-blog/categories" class="mobile-nav-link">Categories</a>
   
-    <a href="/personal-blog/public/tags" class="mobile-nav-link">Tags</a>
+    <a href="/personal-blog/tags" class="mobile-nav-link">Tags</a>
   
-    <a href="/personal-blog/public/about" class="mobile-nav-link">About</a>
+    <a href="/personal-blog/about" class="mobile-nav-link">About</a>
   
 </nav> -->
     
@@ -437,13 +437,13 @@ var a = new Donate({
 </script>
 
 
-  <link rel="stylesheet" href="/personal-blog/public/fancybox/jquery.fancybox.css">
-  <script src="/personal-blog/public/fancybox/jquery.fancybox.pack.js"></script>
+  <link rel="stylesheet" href="/personal-blog/fancybox/jquery.fancybox.css">
+  <script src="/personal-blog/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/personal-blog/public/js/scripts.js"></script>
-<script src="/personal-blog/public/js/bootstrap.js"></script>
-<script src="/personal-blog/public/js/main.js"></script>
+<script src="/personal-blog/js/scripts.js"></script>
+<script src="/personal-blog/js/bootstrap.js"></script>
+<script src="/personal-blog/js/main.js"></script>
 
 
 
