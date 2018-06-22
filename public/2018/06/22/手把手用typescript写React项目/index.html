@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <!-- PACE Progress Bar START -->
+  
+    <script src="/personal-blog/public/js/pace.min.js"></script>
+    <link rel="stylesheet" href="https://github.com/HubSpot/pace/raw/master/themes/orange/pace-theme-flash.css">
+  
+  
+
+  <!-- PACE Progress Bar START -->
+
+  
+  <title>手把手用typescript写react项目 | Qing的前端开发Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="TypescriptReact" />
+  
+  
+  
+  
+  <meta name="description" content="最近写了一个基于React的UI库项目，本意是希望使用TypeScript去写。正好Webpack4.x也没有配过，正好能看一下比起webpack3的配置有哪些区别。这次的教程就主要写下创建项目的顺序，还有尿点。首先创建一个文件夹，然后使用yarn创建项目和package.json文件
+1yarn init
+接下去就是各种回车和输入，知道package.json文件创建完成。
+接着创建目录-bui">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手把手用typescript写React项目">
+<meta property="og:url" content="https://walkstreet.github.io/personal-blog/public/2018/06/22/手把手用typescript写React项目/index.html">
+<meta property="og:site_name" content="Qing的前端开发Blog">
+<meta property="og:description" content="最近写了一个基于React的UI库项目，本意是希望使用TypeScript去写。正好Webpack4.x也没有配过，正好能看一下比起webpack3的配置有哪些区别。这次的教程就主要写下创建项目的顺序，还有尿点。首先创建一个文件夹，然后使用yarn创建项目和package.json文件
+1yarn init
+接下去就是各种回车和输入，知道package.json文件创建完成。
+接着创建目录-bui">
+<meta property="og:updated_time" content="2018-06-22T09:03:00.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手把手用typescript写React项目">
+<meta name="twitter:description" content="最近写了一个基于React的UI库项目，本意是希望使用TypeScript去写。正好Webpack4.x也没有配过，正好能看一下比起webpack3的配置有哪些区别。这次的教程就主要写下创建项目的顺序，还有尿点。首先创建一个文件夹，然后使用yarn创建项目和package.json文件
+1yarn init
+接下去就是各种回车和输入，知道package.json文件创建完成。
+接着创建目录-bui">
+  
+    <link rel="alternate" href="/atom.xml" title="Qing的前端开发Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/personal-blog/public/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/personal-blog/public/css/style.css">
+
+  <script src="/personal-blog/public/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/personal-blog/public/css/bootstrap.css" >
+  <link rel="stylesheet" href="/personal-blog/public/css/hiero.css" >
+  <link rel="stylesheet" href="/personal-blog/public/css/glyphs.css" >
+  
+    <link rel="stylesheet" href="/personal-blog/public/css/vdonate.css" >
+  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/personal-blog/public/css/my.css">
+  <!-- Google Adsense -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-0123456789ABCDEF",
+          enable_page_level_ads: true
+      });
+  </script>
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/personal-blog/public/"] = "首页"; 
+
+  themeMenus["/personal-blog/public/archives"] = "归档"; 
+
+  themeMenus["/personal-blog/public/categories"] = "分类"; 
+
+  themeMenus["/personal-blog/public/tags"] = "标签"; 
+
+  themeMenus["/personal-blog/public/about"] = "关于"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/personal-blog/public/" title="Qing的前端开发Blog" rel="home"> Qing的前端开发Blog </a>
+            
+          </h1>
+
+          
+            <div class="site-description">Web前端开发文档整理</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/personal-blog/public/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="originBgDiv" style="background: #fff; width: 100%;">
+
+      <div style="max-height:600px; overflow: hidden;  display: flex; display: -webkit-flex; align-items: center;">
+        <img id="originBg" width="100%" alt="" src="">
+      </div>
+
+  </div>
+
+  <script>
+  function setAboutIMG(){
+      var imgUrls = "css/images/pose.jpg,https://source.unsplash.com/collection/954550/1920x1080".split(",");
+      var random = Math.floor((Math.random() * imgUrls.length ));
+      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+        document.getElementById("originBg").src=imgUrls[random];
+      } else {
+        document.getElementById("originBg").src='/personal-blog/public/' + imgUrls[random];
+      }
+  }
+  bgDiv=document.getElementById("originBgDiv");
+  if(location.pathname.match('about')){
+    setAboutIMG();
+    bgDiv.style.display='block';
+  }else{
+    bgDiv.style.display='none';
+  }
+  </script>
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-手把手用typescript写React项目" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      手把手用typescript写React项目
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/personal-blog/public/2018/06/22/手把手用typescript写React项目/" class="article-date">
+	  <time datetime="2018-06-22T07:29:45.000Z" itemprop="datePublished">六月 22, 2018</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近写了一个基于React的UI库项目，本意是希望使用TypeScript去写。正好Webpack4.x也没有配过，正好能看一下比起webpack3的配置有哪些区别。这次的教程就主要写下创建项目的顺序，还有尿点。<br>首先创建一个文件夹，然后使用yarn创建项目和package.json文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn init</div></pre></td></tr></table></figure>
+<p>接下去就是各种回车和输入，知道package.json文件创建完成。</p>
+<p>接着创建目录<br>-build<br> |-webpack.base.js<br> |-webpack.dev.js<br> |-webpack.prd.js<br>-src<br> |-component<br> |-style<br> |-main.tsx<br>-index.html<br>-index.js</p>
+<p>index.html: 模板文件<br>index.js: npm插件通过import引入的入口文件，配合package.json里的main字段使用，注意路径<br>src-component: react的组件目录<br>src-style: 存放scss样式文件<br>main.tsx: typescript的入口文件</p>
+<a id="more"></a>
+<p>然后我们需要webpack进行打包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add -D webpack webpack-dev-middleware webpack-hot-middleware@next</div></pre></td></tr></table></figure></p>
+<p>配置webpack.base.js这个开发和生产环境都需要的各种loader和通用配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">    // 开发端口</div><div class="line">    devPort: 3000,</div><div class="line">    // 关联文件类型</div><div class="line">    resolve: &#123;</div><div class="line">        extensions: [&apos;.ts&apos;, &apos;.tsx&apos;, &apos;.js&apos;, &apos;.scss&apos;, &apos;.css&apos;, &apos;.png&apos;, &apos;.gif&apos;, &apos;.jpg&apos;]</div><div class="line">    &#125;,</div><div class="line">    // loader</div><div class="line">    rules: [&#123;</div><div class="line">        test: /\.(eot|svg|ttf|woff|woff2)$/,</div><div class="line">        loader: &apos;file-loader?name=fonts/[name].[ext]&apos;</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        test: /\.(png|jpg|gif)$/,</div><div class="line">        loader: process.env.NODE_ENV==&apos;prd&apos; ? </div><div class="line">        ExtractTextPlugin.extract(&#123;</div><div class="line">            fallback: &quot;style-loader&quot;,</div><div class="line">            use: &quot;css-loader!postcss-loader!sass-loader&quot;</div><div class="line">        &#125;)</div><div class="line">        :</div><div class="line">        &apos;url-loader?limit=8192&amp;name=images/[name].[ext]&apos;</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        test: /\.css$/,</div><div class="line">        loader: &quot;style-loader!css-loader&quot;</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        test: /\.(scss|sass)$/,</div><div class="line">        loader: &quot;style-loader!css-loader!postcss-loader!sass-loader&quot;</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        test: /\.js?$/, //表示要变异的文件的类型，这里要编译的是js文件</div><div class="line">        loader: &apos;babel-loader&apos;, //装载的哪些模块</div><div class="line">        exclude: /node_modules/, //标示不变异node_modules文件夹下面的内容</div><div class="line">        query: &#123; //具体的编译的类型，</div><div class="line">            compact: false, //表示不压缩</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        test: /\.tsx$/,</div><div class="line">        enforce: &apos;pre&apos;,</div><div class="line">        loader: [&apos;awesome-typescript-loader&apos;, &apos;tslint-loader&apos;]</div><div class="line">    &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>安装各种loader到依赖里，还有babel,autoprefixer和typescript的支持<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add -D autoprefixer awesome-typescript-loader babel-core babel-preset-react babel-loader babel-polyfill babel-preset-env babel-preset-typescript css-loader file-loader node-sass postcss-loader sass-loader style-loader ts-loader typescript url-loader</div></pre></td></tr></table></figure></p>
+<p>安装完成后，需要在根目录下配置TypeScript配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// tsconfig.json</div><div class="line">&#123;</div><div class="line">    &quot;compilerOptions&quot;: &#123;</div><div class="line">        &quot;sourceMap&quot;: true,</div><div class="line">        &quot;allowJs&quot;: true,</div><div class="line">        &quot;module&quot;: &quot;commonjs&quot;,</div><div class="line">        &quot;removeComments&quot;: true,</div><div class="line">        // 可以使用 Promise, async, await等新语法</div><div class="line">        &quot;target&quot;: &quot;es2017&quot;,</div><div class="line">        &quot;jsx&quot;: &quot;react&quot;</div><div class="line">    &#125;,</div><div class="line">    &quot;exclude&quot;: [</div><div class="line">        &quot;node_modules&quot; // 这个目录下的代码不会被 typescript 处理</div><div class="line">    ],</div><div class="line">    &quot;include&quot;: [</div><div class="line">        &quot;./src/**/*&quot;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>autoprefixer的配置文件，需要依赖postcss-loader，已安装，在根目录下创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// postcss.config.js</div><div class="line">module.exports = &#123;</div><div class="line">    plugins: [</div><div class="line">        require(&apos;autoprefixer&apos;)(&#123; browsers: [&apos;iOS&gt;7&apos;, &apos;Android&gt;4&apos;] &#125;)</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>我们还需要使用tslint规则来检验代码的统一性和可读性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add -D tslint tslint-loader tslint-react</div></pre></td></tr></table></figure></p>
+<p>然后再根目录下创建tslint.json文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;extends&quot;: [</div><div class="line">        &quot;tslint:latest&quot;,</div><div class="line">        &quot;tslint-react&quot;</div><div class="line">    ],</div><div class="line">    &quot;rules&quot;: &#123;</div><div class="line">        // 是否允许使用字符串直接访问object的属性</div><div class="line">        &quot;no-string-literal&quot;: false,</div><div class="line">        // 检查分号，忽略interfaces</div><div class="line">        &quot;semicolon&quot;: [</div><div class="line">            true,</div><div class="line">            &quot;always&quot;,</div><div class="line">            &quot;ignore-interfaces&quot;</div><div class="line">        ],</div><div class="line">        // 引号，双单使用，一般使用单引号，jsx里使用双引号</div><div class="line">        &quot;quotemark&quot;: [</div><div class="line">            true,</div><div class="line">            &quot;single&quot;,</div><div class="line">            &quot;jsx-double&quot;,</div><div class="line">            &quot;avoid-template&quot;,</div><div class="line">            &quot;avoid-escape&quot;</div><div class="line">        ],</div><div class="line">        // 4个空格代替tab键</div><div class="line">        &quot;indent&quot;: [</div><div class="line">            true,</div><div class="line">            &quot;spaces&quot;,</div><div class="line">            4</div><div class="line">        ],</div><div class="line">        // 禁止出现重复的import</div><div class="line">        &quot;no-duplicate-imports&quot;: true,</div><div class="line">        // 禁止一个文件中出现多个相同的 namespace</div><div class="line">        &quot;no-mergeable-namespace&quot;: true,</div><div class="line">        // 文件类型必须时 utf-8</div><div class="line">        &quot;encoding&quot;: true,</div><div class="line">        // import 语句中，关键字之间的间距必须是一个空格</div><div class="line">        &quot;import-spacing&quot;: true,</div><div class="line">        // 接口可以 implement extend 和 merge</div><div class="line">        &quot;interface-over-type-literal&quot;: true,</div><div class="line">        // new后面要有空格</div><div class="line">        &quot;new-parens&quot;: true,</div><div class="line">        // 禁止debugger</div><div class="line">        &quot;no-debugger&quot;: false,</div><div class="line">        // 禁止行尾有空格</div><div class="line">        &quot;no-trailing-whitespace&quot;: false,</div><div class="line">        // 禁止无用的表达式</div><div class="line">        &quot;no-unused-expression&quot;: true,</div><div class="line">        // 禁止未使用的变量</div><div class="line">        &quot;no-unused-variable&quot;: true,</div><div class="line">        // 不能未申明就使用</div><div class="line">        &quot;no-use-before-declare&quot;: true,</div><div class="line">        // 不能使用var</div><div class="line">        &quot;no-var-keyword&quot;: true,</div><div class="line">        // interface的命名不用必须带大写“I”</div><div class="line">        &quot;interface-name&quot;: [</div><div class="line">            true,</div><div class="line">            &quot;never-prefix&quot;</div><div class="line">        ],</div><div class="line">        &quot;no-console&quot;: [&quot;error&quot;, &#123; &quot;allow&quot;: [&quot;warn&quot;, &quot;error&quot;] &#125;]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>babel语法的支持也需要在根目录下创建.babelrc文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">// .babelrc</div><div class="line">&#123;</div><div class="line">    &quot;presets&quot;: [</div><div class="line">        [</div><div class="line">            &quot;env&quot;,</div><div class="line">            &#123;</div><div class="line">                &quot;targets&quot;: &#123;</div><div class="line">                    &quot;browsers&quot;: [</div><div class="line">                        &quot;last 2 versions&quot;,</div><div class="line">                        &quot;safari &gt;= 7&quot;</div><div class="line">                    ]</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        ],</div><div class="line">        [</div><div class="line">            &quot;react&quot;</div><div class="line">        ],</div><div class="line">        [</div><div class="line">            &quot;typescript&quot;</div><div class="line">        ]</div><div class="line">    ],</div><div class="line">    &quot;plugins&quot;: [</div><div class="line">        &quot;react-hot-loader/babel&quot;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>配置webpack的开发配置文件<br>要安装依赖先，还需要支持热更新<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add -D html-webpack-plugin react-hot-loader</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">// build/webpack.dev.js</div><div class="line">var path = require(&apos;path&apos;);</div><div class="line">var webpack = require(&apos;webpack&apos;);</div><div class="line">var HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</div><div class="line">var autoprefixer = require(&apos;autoprefixer&apos;);</div><div class="line">var global = require(&apos;./webpack.base.js&apos;);</div><div class="line"></div><div class="line">module.exports = &#123;</div><div class="line">    // Enable sourcemaps for debugging webpack&apos;s output.</div><div class="line">    devtool: &quot;source-map&quot;,</div><div class="line">    entry: &#123;</div><div class="line">        app: [</div><div class="line">            // `webpack-dev-server/client?http://localhost:8080/`,</div><div class="line">            &apos;webpack-hot-middleware/client?path=/__webpack_hmr&amp;timeout=10000&amp;reload=true&apos;,  // 热更新</div><div class="line">            &apos;babel-polyfill&apos;,</div><div class="line">            &apos;webpack-hot-middleware/client&apos;,</div><div class="line">            path.join(__dirname, &apos;../src/main.tsx&apos;)</div><div class="line">        ]</div><div class="line">    &#125;,</div><div class="line">    output: &#123; //输出</div><div class="line">        path: path.join(__dirname, &apos;../dist&apos;),</div><div class="line">        filename: &quot;bundle.js&quot;,</div><div class="line">        publicPath: &apos;/&apos;</div><div class="line">    &#125;,</div><div class="line">    mode: &quot;development&quot;,  // webpack4.x后需要加入的新选项，必须写</div><div class="line">    performance: &#123;</div><div class="line">        hints: false</div><div class="line">    &#125;,</div><div class="line">    module: &#123;</div><div class="line">        rules: global.rules</div><div class="line">    &#125;,</div><div class="line">    resolve: global.resolve,</div><div class="line">    plugins: [</div><div class="line">        new HtmlWebpackPlugin(&#123;</div><div class="line">            filename: &apos;index.html&apos;,</div><div class="line">            inject: &apos;body&apos;,</div><div class="line">            template: path.join(__dirname, &apos;../index.html&apos;) //模板地址</div><div class="line">        &#125;),</div><div class="line">        // OccurenceOrderPlugin is needed for webpack 1.x only</div><div class="line">        new webpack.optimize.OccurrenceOrderPlugin(),</div><div class="line">        new webpack.HotModuleReplacementPlugin(),</div><div class="line">        // Use NoErrorsPlugin for webpack 1.x</div><div class="line">        new webpack.NoEmitOnErrorsPlugin()</div><div class="line">    ],</div><div class="line">    cache: true</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>配置webpack.prd.js文件，因为要把css分离出来单独从外部引入，所以需要安装插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add -D extract-text-webpack-plugin</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">var path = require(&apos;path&apos;);</div><div class="line">var webpack = require(&apos;webpack&apos;);</div><div class="line">var autoprefixer = require(&apos;autoprefixer&apos;);</div><div class="line">var ExtractTextPlugin = require(&apos;extract-text-webpack-plugin&apos;);</div><div class="line"></div><div class="line">module.exports = &#123;</div><div class="line">    devtool: &apos;cheap-module-eval-source-map&apos;,</div><div class="line">    entry: &#123;</div><div class="line">        vendor: [&apos;react&apos;, &apos;react-dom&apos;],</div><div class="line">        app: [</div><div class="line">            &apos;babel-polyfill&apos;,</div><div class="line">            path.join(__dirname, &apos;../src/main.tsx&apos;)</div><div class="line">        ]</div><div class="line">    &#125;, </div><div class="line">    //入口</div><div class="line">    output: &#123; //输出</div><div class="line">        path: path.join(__dirname, &apos;../public&apos;),</div><div class="line">        filename: &quot;cui.min.js&quot;,</div><div class="line">        publicPath: &apos;./&apos;</div><div class="line">    &#125;,</div><div class="line">    mode: &quot;production&quot;,</div><div class="line">    module: &#123;</div><div class="line">        rules: global.rules</div><div class="line">    &#125;,</div><div class="line">    resolve: global.resolve,</div><div class="line">    plugins: [</div><div class="line">        new webpack.LoaderOptionsPlugin(&#123;</div><div class="line">            options: &#123;</div><div class="line">                postcss: [</div><div class="line">                    autoprefixer(),</div><div class="line">                ]</div><div class="line">            &#125;</div><div class="line">        &#125;),</div><div class="line">        new ExtractTextPlugin(&#123;</div><div class="line">            filename: &apos;./cui.min.css&apos;</div><div class="line">        &#125;),</div><div class="line">    ],</div><div class="line">    // 分片及vendor提取</div><div class="line">    optimization: &#123;</div><div class="line">        splitChunks: &#123;</div><div class="line">            cacheGroups: &#123;</div><div class="line">                commons: &#123;</div><div class="line">                    chunks: &apos;initial&apos;,</div><div class="line">                    minChunks: 2,</div><div class="line">                    maxInitialRequests: 5,</div><div class="line">                    minSize: 0</div><div class="line">                &#125;,</div><div class="line">                vendor: &#123;</div><div class="line">                    test: /node_modules/,</div><div class="line">                    chunks: &apos;initial&apos;,</div><div class="line">                    name: &apos;vendor&apos;,</div><div class="line">                    priority: 10,</div><div class="line">                    enforce: true</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    cache: true</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后编辑入口文件，因为使用了TypeScript来编写文件，react之前并未使用TypeScript编写，所以不支持，那我们在安装依赖时需要多安装type包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add react react-dom @types/react @types/react-dom</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">// src/app.tsx</div><div class="line">import * as React from &apos;react&apos;;</div><div class="line">import Input from &apos;./component/Input&apos;;</div><div class="line"></div><div class="line">class App extends React.Component&lt;&#123;&#125;, &#123;&#125;&gt; &#123;</div><div class="line">    public render() &#123;</div><div class="line">        return (</div><div class="line">            &lt;Input text=&quot;Hello world!!&quot; /&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">export default App;</div><div class="line"></div><div class="line">// src/component/Input.tsx</div><div class="line">import * as React from &apos;react&apos;;</div><div class="line"></div><div class="line">interface HelloText &#123; text: string; &#125;</div><div class="line">interface ReactState &#123; name: any; &#125;</div><div class="line"></div><div class="line">class Input extends React.Component&lt;HelloText, ReactState&gt; &#123;</div><div class="line">    constructor(props) &#123;</div><div class="line">        super(props);</div><div class="line">        this.state = &#123;</div><div class="line">            name: &apos;King&apos;,</div><div class="line">        &#125;;</div><div class="line">        this.onClickHandler = this.onClickHandler.bind(this);</div><div class="line">    &#125;</div><div class="line">    public onClickHandler(): void &#123;</div><div class="line">        this.setState(&#123;</div><div class="line">            name: &apos;Tina&apos;,</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">    public render() &#123;</div><div class="line">        return (</div><div class="line">            &lt;div&gt;</div><div class="line">                &lt;h1&gt;First Demo&lt;/h1&gt;</div><div class="line">                &lt;div&gt;Props: &#123;this.props[&apos;text&apos;]&#125;&lt;/div&gt;</div><div class="line">                &lt;div&gt;state: &#123;this.state[&apos;name&apos;]&#125;&lt;/div&gt;</div><div class="line">                &lt;button</div><div class="line">                    onClick=&#123;this.onClickHandler&#125;</div><div class="line">                &gt;</div><div class="line">                    click me!</div><div class="line">                &lt;/button&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">export default Input;</div><div class="line"></div><div class="line">// src/main.tsx</div><div class="line">import * as React from &apos;react&apos;;</div><div class="line">import * as ReactDom from &apos;react-dom&apos;;</div><div class="line">import App from &apos;./app&apos;;</div><div class="line">import &apos;./style/index.scss&apos;;</div><div class="line"></div><div class="line">ReactDom.render(&lt;App /&gt;, document.getElementById(&apos;app&apos;));</div><div class="line"></div><div class="line">if (module.hot) &#123;</div><div class="line">    module.hot.accept();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>鉴于TypeScript的严格模式，热更新需要在main文件中监听webpack传入的module，但是这个变量在目前环境中拿不到，所以我们还需要一个支持types的webpack插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add -D @types/webpack-env</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 在if(module.hot)前对module定义下</div><div class="line"></div><div class="line">declare var module: __WebpackModuleApi.Module;</div><div class="line"></div><div class="line">if (module.hot) &#123;</div><div class="line">    module.hot.accept();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>文档先写到这，如果有不清晰的，我会再补充，详细的项目地址可以看<a href="https://github.com/walkstreet/cui-ts" target="_blank" rel="external">这里</a></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/Typescript/">Typescript</a></li></ul>
+
+      
+        <div id="donation_div"></div>
+
+<script src="/personal-blog/public/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/WeChanQR.png',
+  alipayImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/AliPayQR.jpg'
+});
+</script>
+      
+            
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/personal-blog/public/2018/06/22/webpack4-x配置第三方库/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">webpack4.x 配置下载第三方库,分离js成单个文件引入HTML</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 Qing的前端开发Blog All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+
+<!-- Custome JS -->
+<script src="/personal-blog/public/js/my.js"></script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/personal-blog/public/" class="mobile-nav-link">Home</a>
+  
+    <a href="/personal-blog/public/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/personal-blog/public/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/personal-blog/public/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/personal-blog/public/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/personal-blog/public/fancybox/jquery.fancybox.css">
+  <script src="/personal-blog/public/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/personal-blog/public/js/scripts.js"></script>
+<script src="/personal-blog/public/js/bootstrap.js"></script>
+<script src="/personal-blog/public/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
+<style>
+.donate-btn {
+    display: none;
+}
+.originBgDiv {
+    display: none;
+}
+</style>
