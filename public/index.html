@@ -165,6 +165,66 @@ var themeMenus = {};
         
           <section id="main">
   
+    <article id="post-webpack4-x配置第三方库"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/personal-blog/public/2018/06/22/webpack4-x配置第三方库/">webpack4.x 配置下载第三方库,分离js成单个文件引入HTML</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/personal-blog/public/2018/06/22/webpack4-x配置第三方库/" class="article-date">
+	  <time datetime="2018-06-22T03:15:33.000Z" itemprop="datePublished">六月 22, 2018</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>依赖webpack打包时，需要引入第三方库的方法有许多，最简单的是直接npm下载并引入（不推荐）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cnpm i jquery -S</div><div class="line"></div><div class="line">import $ from &apos;jquery&apos;</div><div class="line"></div><div class="line">$(xxx).on()</div><div class="line">$(xxx).css()</div></pre></td></tr></table></figure></p>
+<p>还有一种方式是通过webpack自带的ProvidePlugin这个api引入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">const webpack = require(&apos;webpack&apos;);</div><div class="line"></div><div class="line">// 在plugins里面使用</div><div class="line">plugins:[</div><div class="line">    new Webpack.HotModuleReplacementPlugin(),</div><div class="line">    new HtmlWebpackPlugin(&#123;</div><div class="line">        title:&apos;Hello World&apos;,</div><div class="line">        template: &apos;./src/index.html&apos; //模板地址</div><div class="line">    &#125;),</div><div class="line">    new Webpack.ProvidePlugin(&#123; //下载Jquery库</div><div class="line">        $:&apos;jquery&apos;</div><div class="line">    &#125;)</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>通过ProvidePlugin和 import直接引入区别:</p>
+<ul>
+<li>import $…，引入之后，无论你在代码中是否使用jquery，打包后，都会打进去，这样其实产生大量的冗余js</li>
+<li>Provideplugin, 只有你在使用到此库，才会打包</li>
+</ul>
+<blockquote>
+<p>在webpack3.x版本之前：使用new webpack.optimize.CommonsChunkPlugin现在已经不支持<br>提取第三方库(或者想单独提出来的)js库,增加一个optimization配置,和plugins同级<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">        name:&apos;jquery&apos;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>在webpack4.x以后提取第三方库或js单独引入html使用如下方法</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">// 1.配置入口文件</div><div class="line">entry:&#123;</div><div class="line">    entry: jsonConfig.entry,</div><div class="line">    jquery:&apos;jquery&apos;,</div><div class="line">    angular:&apos;angular&apos;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 2.下载库</div><div class="line">plugins: [</div><div class="line">    new Webpack.ProvidePlugin(&#123;</div><div class="line">        $:&apos;jquery&apos;, //下载Jquery</div><div class="line">        A:&apos;angular&apos; // 下载Angular</div><div class="line">    &#125;)</div><div class="line">]</div><div class="line"></div><div class="line">// 3.分离单独JS，注意：optimization和Plugins是同级，而不是在Plugins内</div><div class="line">optimization:&#123;</div><div class="line">    splitChunks:&#123;</div><div class="line">        cacheGroups:&#123; // 单独提取JS文件引入html</div><div class="line">            aaa:&#123; // 键值可以自定义</div><div class="line">                chunks:&apos;initial&apos;, // </div><div class="line">                name:&apos;jquery&apos;, // 入口的entry的key</div><div class="line">                enforce:true   // 强制 </div><div class="line">            &#125;,</div><div class="line">            bbb:&#123;</div><div class="line">                chunks:&apos;initial&apos;,</div><div class="line">                name:&apos;angular&apos;,</div><div class="line">                enforce:true</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/personal-blog/public/categories/自动化构建/">自动化构建</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/Webpack/">Webpack</a></li></ul>
+
+      
+            
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-react-components-context"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -713,66 +773,6 @@ axios 简介axios 是一个基于Promise 用于浏览器和 nodejs 的 HTTP 客�
 <!-- Table of Contents -->
 
   
-    <article id="post-ES7的async和await"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/personal-blog/public/2017/06/14/ES7的async和await/">ES7的Async/Await</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/personal-blog/public/2017/06/14/ES7的async和await/" class="article-date">
-	  <time datetime="2017-06-14T07:00:37.000Z" itemprop="datePublished">六月 14, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-summary" style="margin-left:0;">
-            例子Async/Await应该是目前最简单的异步方案了，首先来看个例子。
-这里我们要实现一个暂停功能，输入N毫秒，则停顿N毫秒后才继续往下执行。
-12345678910111213141516var sleep = function (time) &#123;    return new Promise(function (resolve, reject) &#123;        setTimeout(function () &#123;            resolve();        &#125;, time);    &#125;)&#125;;var start = async function () &#123;    // 在这里使用起来就像同步代码那样直观  ...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/personal-blog/public/2017/06/14/ES7的async和await/#more">阅读全文</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/personal-blog/public/categories/Javascript/">Javascript</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/Async-Await/">Async/Await</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/personal-blog/public/tags/ES7/">ES7</a></li></ul>
-
-      
-            
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
@@ -873,6 +873,18 @@ axios 简介axios 是一个基于Promise 用于浏览器和 nodejs 的 HTTP 客�
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/personal-blog/public/2018/06/22/webpack4-x配置第三方库/">webpack4.x 配置下载第三方库,分离js成单个文件引入HTML</a></h6>
+              <span>六月 22, 2018</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/personal-blog/public/2018/05/19/react-components-context/">React组件间通信</a></h6>
               <span>五月 19, 2018</span>
             </div>
@@ -927,18 +939,6 @@ axios 简介axios 是一个基于Promise 用于浏览器和 nodejs 的 HTTP 客�
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/personal-blog/public/2017/06/20/随笔/">面试的心得(2017-6-19)</a></h6>
-              <span>六月 20, 2017</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -948,7 +948,7 @@ axios 简介axios 是一个基于Promise 用于浏览器和 nodejs 的 HTTP 客�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/H5/">H5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/Javascript/">Javascript</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/WEB/">WEB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/自动化构建/">自动化构建</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/规范/">规范</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/随笔/">随笔</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/H5/">H5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/Javascript/">Javascript</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/WEB/">WEB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/自动化构建/">自动化构建</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/规范/">规范</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/personal-blog/public/categories/随笔/">随笔</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -958,7 +958,7 @@ axios 简介axios 是一个基于Promise 用于浏览器和 nodejs 的 HTTP 客�
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Array/">Array</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Arrow/">Arrow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Async-Await/">Async/Await</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/ES6/">ES6</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/ES7/">ES7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Vue2-0/">Vue2.0</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Vue插件/">Vue插件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Webpack/">Webpack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/ajax/">ajax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/axios/">axios</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/component/">component</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/js抖动/">js抖动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/promise/">promise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/sass/">sass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/super/">super</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/this/">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/作用域/">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/全半角/">全半角</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/图片预览/">图片预览</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/性能/">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/移动端/">移动端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/类/">类</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Array/">Array</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Arrow/">Arrow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Async-Await/">Async/Await</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/ES6/">ES6</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/ES7/">ES7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Vue2-0/">Vue2.0</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Vue插件/">Vue插件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/Webpack/">Webpack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/ajax/">ajax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/axios/">axios</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/component/">component</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/js抖动/">js抖动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/promise/">promise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/sass/">sass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/super/">super</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/this/">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/作用域/">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/全半角/">全半角</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/图片预览/">图片预览</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/性能/">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/移动端/">移动端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/类/">类</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/personal-blog/public/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -968,7 +968,7 @@ axios 简介axios 是一个基于Promise 用于浏览器和 nodejs 的 HTTP 客�
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/personal-blog/public/tags/Array/" style="font-size: 10px;">Array</a> <a href="/personal-blog/public/tags/Arrow/" style="font-size: 10px;">Arrow</a> <a href="/personal-blog/public/tags/Async-Await/" style="font-size: 10px;">Async/Await</a> <a href="/personal-blog/public/tags/ES6/" style="font-size: 20px;">ES6</a> <a href="/personal-blog/public/tags/ES7/" style="font-size: 10px;">ES7</a> <a href="/personal-blog/public/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/personal-blog/public/tags/React/" style="font-size: 10px;">React</a> <a href="/personal-blog/public/tags/Vue2-0/" style="font-size: 16.67px;">Vue2.0</a> <a href="/personal-blog/public/tags/Vue插件/" style="font-size: 10px;">Vue插件</a> <a href="/personal-blog/public/tags/Webpack/" style="font-size: 10px;">Webpack</a> <a href="/personal-blog/public/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/personal-blog/public/tags/axios/" style="font-size: 10px;">axios</a> <a href="/personal-blog/public/tags/component/" style="font-size: 10px;">component</a> <a href="/personal-blog/public/tags/css/" style="font-size: 10px;">css</a> <a href="/personal-blog/public/tags/html5/" style="font-size: 10px;">html5</a> <a href="/personal-blog/public/tags/js抖动/" style="font-size: 10px;">js抖动</a> <a href="/personal-blog/public/tags/promise/" style="font-size: 10px;">promise</a> <a href="/personal-blog/public/tags/sass/" style="font-size: 10px;">sass</a> <a href="/personal-blog/public/tags/super/" style="font-size: 10px;">super</a> <a href="/personal-blog/public/tags/this/" style="font-size: 10px;">this</a> <a href="/personal-blog/public/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/personal-blog/public/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/personal-blog/public/tags/全半角/" style="font-size: 10px;">全半角</a> <a href="/personal-blog/public/tags/图片预览/" style="font-size: 10px;">图片预览</a> <a href="/personal-blog/public/tags/性能/" style="font-size: 10px;">性能</a> <a href="/personal-blog/public/tags/移动端/" style="font-size: 10px;">移动端</a> <a href="/personal-blog/public/tags/类/" style="font-size: 13.33px;">类</a> <a href="/personal-blog/public/tags/面试/" style="font-size: 10px;">面试</a>
+      <a href="/personal-blog/public/tags/Array/" style="font-size: 10px;">Array</a> <a href="/personal-blog/public/tags/Arrow/" style="font-size: 10px;">Arrow</a> <a href="/personal-blog/public/tags/Async-Await/" style="font-size: 10px;">Async/Await</a> <a href="/personal-blog/public/tags/ES6/" style="font-size: 20px;">ES6</a> <a href="/personal-blog/public/tags/ES7/" style="font-size: 10px;">ES7</a> <a href="/personal-blog/public/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/personal-blog/public/tags/React/" style="font-size: 10px;">React</a> <a href="/personal-blog/public/tags/Vue2-0/" style="font-size: 16.67px;">Vue2.0</a> <a href="/personal-blog/public/tags/Vue插件/" style="font-size: 10px;">Vue插件</a> <a href="/personal-blog/public/tags/Webpack/" style="font-size: 13.33px;">Webpack</a> <a href="/personal-blog/public/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/personal-blog/public/tags/axios/" style="font-size: 10px;">axios</a> <a href="/personal-blog/public/tags/component/" style="font-size: 10px;">component</a> <a href="/personal-blog/public/tags/css/" style="font-size: 10px;">css</a> <a href="/personal-blog/public/tags/html5/" style="font-size: 10px;">html5</a> <a href="/personal-blog/public/tags/js抖动/" style="font-size: 10px;">js抖动</a> <a href="/personal-blog/public/tags/promise/" style="font-size: 10px;">promise</a> <a href="/personal-blog/public/tags/sass/" style="font-size: 10px;">sass</a> <a href="/personal-blog/public/tags/super/" style="font-size: 10px;">super</a> <a href="/personal-blog/public/tags/this/" style="font-size: 10px;">this</a> <a href="/personal-blog/public/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/personal-blog/public/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/personal-blog/public/tags/全半角/" style="font-size: 10px;">全半角</a> <a href="/personal-blog/public/tags/图片预览/" style="font-size: 10px;">图片预览</a> <a href="/personal-blog/public/tags/性能/" style="font-size: 10px;">性能</a> <a href="/personal-blog/public/tags/移动端/" style="font-size: 10px;">移动端</a> <a href="/personal-blog/public/tags/类/" style="font-size: 13.33px;">类</a> <a href="/personal-blog/public/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
   </div>
 
@@ -978,7 +978,7 @@ axios 简介axios 是一个基于Promise 用于浏览器和 nodejs 的 HTTP 客�
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2017/04/">四月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2017/03/">三月 2017</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2017/04/">四月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/personal-blog/public/archives/2017/03/">三月 2017</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
